@@ -79,7 +79,7 @@ public class Zaidimas
 	{
 		for (int i=0; i < kiekis; i++)
 		{
-			apskritimai.add(new Apskritimas(-50, 100, -50, 100, 100));
+			apskritimai.add(new Apskritimas(-100, 100, -100, 100, 100));
 		}
 		issaugotiApskritimus();
 	}
