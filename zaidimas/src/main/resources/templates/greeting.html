@@ -56,7 +56,8 @@
                 
     		    function sukurtiApskritima()
     		    {
-    		        dialog_sukurti.dialog("close");
+    		        //dialog_sukurti.dialog("close");
+    		        $("#sukurimo_forma").submit();
     		    }
     		    // AJAX
         		$( '#rodyk' ).click ( function() 
@@ -106,7 +107,7 @@
         	    			'<td>' + apskritimai[i].x + '</td>' +
         	    			'<td>' + apskritimai[i].y + '</td>' +
         	    			'<td>' + apskritimai[i].radius + '</td>' +
-        	    			'<td>' + /* apskritimai[i].busena +*/ '</td></tr>';
+        	    			'<td>' + apskritimai[i].busena + '</td></tr>';
         	    		}
         				rez += '</table>';
         				rez_vieta = document.getElementById (id_lenteles);
@@ -141,6 +142,8 @@
 	</div>
 	<button id="button_sukurti">Sukurti</button>
 	<input type="button" id="rodyk" value="Rodyti">
+	<input type="hidden" name="isvalyti_name" value="isvalyti">
+	<input type="button" id="isvalyti" value="Išvalyti">
 	<canvas id="vaizdas" width="400" height="400"></canvas>
     <!-- <table>
     	<tr>

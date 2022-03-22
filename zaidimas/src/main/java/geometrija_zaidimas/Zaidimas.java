@@ -12,6 +12,7 @@ public class Zaidimas
 {
 	protected ArrayList<Apskritimas> apskritimai = new ArrayList<Apskritimas>();
 	private boolean apskritimai_issaugoti = false;
+	protected int zaidejo_apskritimu_kiekis = 0;
 	
 	public Zaidimas(ArrayList<Apskritimas> apskritimai)
 	{
@@ -29,7 +30,7 @@ public class Zaidimas
 		FileWriter irasyti;
 		try
 		{
-			irasyti = new FileWriter("data/duomenys.csv");
+			irasyti = new FileWriter("data/duomenys.csv", false);
 			for (int i = 0; i < apskritimai.size(); i++)
 			{
 				irasyti.write(""+apskritimai.get(i).getX()+",");// x
@@ -39,6 +40,39 @@ public class Zaidimas
 			}
 			irasyti.close();
 			apskritimai_issaugoti = true;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void issaugotiZaidejoApskritima()
+	{
+		FileWriter irasyti;
+		try
+		{
+			irasyti = new FileWriter("data/duomenys.csv", true);
+			irasyti.write(""+apskritimai.get(apskritimai.size()-1).getX()+",");
+			irasyti.write(""+apskritimai.get(apskritimai.size()-1).getY()+",");
+			irasyti.write(""+apskritimai.get(apskritimai.size()-1).getRadius());
+			irasyti.write("\n");
+			irasyti.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void pasalintiApskritimus()
+	{
+		FileWriter irasyti;
+		try
+		{
+			irasyti = new FileWriter("data/duomenys.csv", false);
+			irasyti.write("");
+			irasyti.close();
 		}
 		catch (IOException e)
 		{
@@ -92,5 +126,15 @@ public class Zaidimas
 	public ArrayList<Apskritimas> getApskritimai()
 	{
 		return apskritimai;
+	}
+
+	public int getZaidejoApskritimuKiekis()
+	{
+		return zaidejo_apskritimu_kiekis;
+	}
+
+	public void pridetiZaidejoApskritimuKiekis()
+	{
+		zaidejo_apskritimu_kiekis++;
 	}
 }

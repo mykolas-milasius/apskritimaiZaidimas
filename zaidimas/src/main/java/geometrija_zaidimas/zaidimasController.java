@@ -20,26 +20,37 @@ public class zaidimasController
 	@RequestMapping("/greeting")
 	public String greeting(
 			@RequestParam(name="name", required=false, defaultValue="World") String name,
-			@RequestParam(name="sukurti", required=false, defaultValue="nesukurti") String sukurti,
+			@RequestParam(name="sukurti_name", required=false, defaultValue="nesukurti") String sukurti,
 			@RequestParam(name="in_x_id", required=false, defaultValue="0") Double x,
 			@RequestParam(name="in_y_id", required=false, defaultValue="0") Double y,
 			@RequestParam(name="in_radius_id", required=false, defaultValue="0") Double radius,
-			Model model)
+			@RequestParam(name="isvalyti_name", required=false, defaultValue="neisvalyti") String isvalyti,
+ 			Model model)
 	{
 		model.addAttribute("name", name);
-		//ArrayList<Figura> apskritimai = new ArrayList<Figura>();
-		ArrayList<Apskritimas> apskritimai = new ArrayList<Apskritimas>();
 		Zaidimas zaidimas = new Zaidimas();
-		zaidimas.sukurtiApskritimus(15);
+		ArrayList<Apskritimas> apskritimai = new ArrayList<Apskritimas>();
 		if(sukurti != null)
 		{
-			apskritimai.add(new Apskritimas(x, y, radius));
-			for (int i = 0; i < apskritimai.size(); i++)
+			if(x != apskritimai.get(apskritimai.size()-1).getX() && y != apskritimai.get(apskritimai.size()-1).getY() && radius != apskritimai.get(apskritimai.size()-1).getRadius())
 			{
-				apskritimai.get(i).setBusena(apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1)));
+				zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
+				apskritimai = zaidimas.getApskritimai();
+				apskritimai.add(new Apskritimas(x, y, radius));
+				zaidimas.pridetiZaidejoApskritimuKiekis();
+				for (int i = 0; i < apskritimai.size(); i++)
+				{
+					apskritimai.get(i).setBusena(apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1)));
+				}
+				zaidimas.issaugotiZaidejoApskritima();
 			}
 		}
-		zaidimas.issaugotiApskritimus();
+		else
+		{
+			zaidimas.sukurtiApskritimus(15);
+			zaidimas.issaugotiApskritimus();
+			apskritimai = zaidimas.getApskritimai();
+		}
 		model.addAttribute("apskritimai", apskritimai);
 		return "greeting";
 	}
