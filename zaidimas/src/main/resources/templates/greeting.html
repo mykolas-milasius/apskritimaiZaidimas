@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+    	table, tr, td
+    	{
+    		border: 1px solid black;
+    	}
+    	#div_sukurti
+    	{
+    		margin: 5px, auto, 5px, auto;
+    		border: 1px solid black;
+    	}
+    	form
+    	{
+    		background-color: white;
+    	}
+    	canvas
+    	{
+    		border: 1px solid black;
+    	}
+    </style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+    		$(document).ready(function()
+            {
+    			var dialog_sukurti, form_prideti;
+    			
+                dialog_sukurti = $( "#div_sukurti" ).dialog(
+                {
+                    autoOpen: false,
+                    height: 300,
+                    width: 300,
+                    modal: true,
+                    buttons:
+                    {
+                        "Patvirtinti": sukurtiApskritima,
+                        Cancel: function()
+                        {
+                        	dialog_sukurti.dialog( "close" ); 
+                        }
+                    }
+                });
+    			
+                $( "#button_sukurti" ).button().on( "click", function()
+                {
+                	dialog_sukurti.dialog( "open" );
+                });
+                
+                form_prideti = dialog_sukurti.find( "form" );
+                
+    		    function sukurtiApskritima()
+    		    {
+    		        dialog_sukurti.dialog("close");
+    		    }
+    		    // AJAX
+        		$( '#rodyk' ).click ( function() 
+        		{
+        			function piesti (apskritimai, vaizdas)
+        			{
+			    		console.log ( apskritimai );
+			    		var canvas = document.getElementById("vaizdas");
+						var ctx = canvas.getContext("2d");
+						
+						ctx.beginPath();
+						ctx.moveTo(200, 0);
+						ctx.lineTo(200, 400);
+						ctx.moveTo(0, 200);
+						ctx.lineTo(400, 200);							
+						ctx.stroke();
+						
+						for ( i = 0; i < apskritimai.length; i++ )
+						{
+							ctx.beginPath();
+							ctx.arc( 
+								200 + 2 * parseInt ( apskritimai [ i ].x )
+								, 200 - 2 * parseInt ( apskritimai[ i ].y )
+								, parseInt ( apskritimai[ i ].radius )
+								, 0
+								, 2 * Math.PI
+							);
+							ctx.stroke();
+						}
+        			}
+        			
+        			function rodyti_lentele(id_lenteles, apskritimai)
+        			{
+        				rez = '<table>';
+        		    	rez += '<tr>' +
+        	    		'<td>number</td>' +
+        	    		'<td>x</td>' +
+        	    		'<td>y</td>' +
+        	    		'<td>radius</td>' +
+        	    		'<td>arPersidengia</td>' +
+        	    		'</tr>';
+        				
+        	    		for (var i = 0; i < apskritimai.length; i++)
+        	    		{
+        	    			rez += '<tr>'+
+        	    			'<td>' + (i+1) + '</td>' +
+        	    			'<td>' + apskritimai[i].x + '</td>' +
+        	    			'<td>' + apskritimai[i].y + '</td>' +
+        	    			'<td>' + apskritimai[i].radius + '</td>' +
+        	    			'<td>' + /* apskritimai[i].busena +*/ '</td></tr>';
+        	    		}
+        				rez += '</table>';
+        				rez_vieta = document.getElementById (id_lenteles);
+        				rez_vieta.innerHTML = rez;
+        			}
+        			
+    				$.ajax(
+    					{
+    						url: '/apskritimai',}).done(function(apskritimai)
+    						{
+    							piesti(apskritimai, vaizdas);
+    							rodyti_lentele('rez', apskritimai);
+    						});
+    				 	}
+    				);
+        		});
+            //});
+    </script>
+</head>
+<body>
+    <!-- <p th:text="'Hello, ' + ${name} + '!'"></p> -->
+	<div id="div_sukurti">
+	    <form method="post" action="" id="sukurimo_forma">
+		    <label for="in_x">x</label>
+		    <input type="text" id="in_x_id" name="in_x_id"><br>
+		    <label for="in_y">y</label>
+		    <input type="text" id="in_y_id" name="in_y_id"><br>
+		    <label for="in_radius">radius</label>
+		    <input type="text" id="in_radius_id" name="in_radius_id"><br>
+	        <input type="hidden" name="sukurti_name" value="sukurti">
+		 </form>
+	</div>
+	<button id="button_sukurti">Sukurti</button>
+	<input type="button" id="rodyk" value="Rodyti">
+	<canvas id="vaizdas" width="400" height="400"></canvas>
+    <!-- <table>
+    	<tr>
+    		<td>number</td>
+    		<td>x</td>
+    		<td>y</td>
+    		<td>radius</td>
+    		<td>arPersidengia</td>
+    	</tr>
+   		<tr th:each="apskritimas, i : ${apskritimai}">
+   			<td th:text="${i.index}"></td>
+   			<td th:text="${apskritimas.x}"> </td>
+   			<td th:text="${apskritimas.y}"> </td>
+   			<td th:text="${apskritimas.radius}"></td>
+   			<td th:text="${apskritimas.arPersidengia(apskritimai[apskritimai.size()-1])} ? 'persidengia' : 'nepersidengia'"></td>
+   		</tr>
+    </table>
+    -->
+    <div id="rez"></div>
+</body>
+</html>
