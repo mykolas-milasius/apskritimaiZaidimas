@@ -29,28 +29,33 @@ public class zaidimasController
 	{
 		model.addAttribute("name", name);
 		Zaidimas zaidimas = new Zaidimas();
-		ArrayList<Apskritimas> apskritimai = new ArrayList<Apskritimas>();
-		if(sukurti != null)
+		zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
+		ArrayList<Apskritimas> apskritimai = zaidimas.getApskritimai();
+		if(sukurti.equals("sukurti"))
 		{
-			if(x != apskritimai.get(apskritimai.size()-1).getX() && y != apskritimai.get(apskritimai.size()-1).getY() && radius != apskritimai.get(apskritimai.size()-1).getRadius())
+			apskritimai.add(new Apskritimas(x, y, radius));
+			zaidimas.pridetiZaidejoApskritimuKiekis();
+			for (int i = 0; i < apskritimai.size(); i++)
 			{
-				zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
-				apskritimai = zaidimas.getApskritimai();
-				apskritimai.add(new Apskritimas(x, y, radius));
-				zaidimas.pridetiZaidejoApskritimuKiekis();
-				for (int i = 0; i < apskritimai.size(); i++)
-				{
-					apskritimai.get(i).setBusena(apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1)));
-				}
-				zaidimas.issaugotiZaidejoApskritima();
+				boolean busena = apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1));
+				System.out.println(busena);
+				apskritimai.get(i).setBusena(busena);
 			}
+			zaidimas.issaugotiZaidejoApskritima();
 		}
 		else
 		{
+			if(isvalyti.equals("isvalyti"))
+			{
+				zaidimas.pasalintiApskritimus();
+				//zaidimas.issaugotiApskritimus();
+				//apskritimai = zaidimas.getApskritimai(); 
+			}
 			zaidimas.sukurtiApskritimus(15);
 			zaidimas.issaugotiApskritimus();
-			apskritimai = zaidimas.getApskritimai();
 		}
+		zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
+		apskritimai = zaidimas.getApskritimai();
 		model.addAttribute("apskritimai", apskritimai);
 		return "greeting";
 	}

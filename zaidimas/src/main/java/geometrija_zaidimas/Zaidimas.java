@@ -67,14 +67,12 @@ public class Zaidimas
 	
 	public void pasalintiApskritimus()
 	{
-		FileWriter irasyti;
 		try
 		{
-			irasyti = new FileWriter("data/duomenys.csv", false);
-			irasyti.write("");
-			irasyti.close();
+			File file = new File("data/duomenys.csv");
+			file.delete();
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}

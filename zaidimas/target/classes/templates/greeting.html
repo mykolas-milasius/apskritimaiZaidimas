@@ -142,8 +142,10 @@
 	</div>
 	<button id="button_sukurti">Sukurti</button>
 	<input type="button" id="rodyk" value="Rodyti">
-	<input type="hidden" name="isvalyti_name" value="isvalyti">
-	<input type="button" id="isvalyti" value="Išvalyti">
+	<form method="post" action="" id="isvalymo_forma">
+		<input type="hidden" name="isvalyti_name" value="isvalyti">
+		<input type="submit" id="isvalyti" value="Išvalyti">
+	</form>
 	<canvas id="vaizdas" width="400" height="400"></canvas>
     <!-- <table>
     	<tr>

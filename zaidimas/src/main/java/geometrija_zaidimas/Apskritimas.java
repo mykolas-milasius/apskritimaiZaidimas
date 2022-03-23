@@ -68,7 +68,7 @@ public class Apskritimas extends Figura
 		return Math.sqrt ( atstumas_x * atstumas_x + atstumas_y * atstumas_y );
 	}
 	
-	public Boolean arPersidengia ( Apskritimas kitas )
+	public boolean arPersidengia ( Apskritimas kitas )
 	{
 		double atstumas = atstumasNuoCentroKitoCentro( kitas );
 		return atstumas < ( radius + kitas.radius );
@@ -83,5 +83,4 @@ public class Apskritimas extends Figura
 	{
 		this.busena = busena;
 	}
-	
 }
