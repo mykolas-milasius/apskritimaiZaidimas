@@ -29,18 +29,12 @@ public class zaidimasController
 	{
 		model.addAttribute("name", name);
 		Zaidimas zaidimas = new Zaidimas();
-		zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
 		ArrayList<Apskritimas> apskritimai = zaidimas.getApskritimai();
 		if(sukurti.equals("sukurti"))
 		{
 			apskritimai.add(new Apskritimas(x, y, radius));
 			zaidimas.pridetiZaidejoApskritimuKiekis();
-			for (int i = 0; i < apskritimai.size(); i++)
-			{
-				boolean busena = apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1));
-				System.out.println(busena);
-				apskritimai.get(i).setBusena(busena);
-			}
+			zaidimas.nustatytiBusenas();
 			zaidimas.issaugotiZaidejoApskritima();
 		}
 		else
@@ -48,8 +42,6 @@ public class zaidimasController
 			if(isvalyti.equals("isvalyti"))
 			{
 				zaidimas.pasalintiApskritimus();
-				//zaidimas.issaugotiApskritimus();
-				//apskritimai = zaidimas.getApskritimai(); 
 			}
 			zaidimas.sukurtiApskritimus(15);
 			zaidimas.issaugotiApskritimus();

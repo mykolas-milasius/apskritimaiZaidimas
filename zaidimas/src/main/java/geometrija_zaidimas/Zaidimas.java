@@ -35,8 +35,8 @@ public class Zaidimas
 			{
 				irasyti.write(""+apskritimai.get(i).getX()+",");// x
 				irasyti.write(""+apskritimai.get(i).getY()+","); // y
-				irasyti.write(""+apskritimai.get(i).getRadius()); //in.write(); // radius
-				// busena issaugoti
+				irasyti.write(""+apskritimai.get(i).getRadius()+","); //in.write(); // radius
+				irasyti.write(""+apskritimai.get(i).getBusena()); // busena issaugoti
 				irasyti.write("\n"); 
 			}
 			irasyti.close();
@@ -56,7 +56,8 @@ public class Zaidimas
 			irasyti = new FileWriter("data/duomenys.csv", true);
 			irasyti.write(""+apskritimai.get(apskritimai.size()-1).getX()+",");
 			irasyti.write(""+apskritimai.get(apskritimai.size()-1).getY()+",");
-			irasyti.write(""+apskritimai.get(apskritimai.size()-1).getRadius());
+			irasyti.write(""+apskritimai.get(apskritimai.size()-1).getRadius()+",");
+			irasyti.write(""+apskritimai.get(apskritimai.size()-1).getBusena());
 			irasyti.write("\n");
 			irasyti.close();
 		}
@@ -79,6 +80,19 @@ public class Zaidimas
 		}
 	}
 	
+	public void sukurtiFaila()
+	{
+		try
+		{
+			File file = new File("data/duomenys.csv");
+			file.createNewFile();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	public void nuskaitymasApskritimu(String file_kelias)
 	{
 		File file = new File(file_kelias);
@@ -93,7 +107,8 @@ public class Zaidimas
 				double x = Double.parseDouble(padalinta[0]);
 				double y = Double.parseDouble(padalinta[1]);
 				double radius = Double.parseDouble(padalinta[2]);
-				apskritimai.add(new Apskritimas(x, y, radius));
+				boolean busena = Boolean.parseBoolean(padalinta[3]);
+				apskritimai.add(new Apskritimas(x, y, radius, busena));
 			}
 			scanner.close();
 		}
@@ -116,12 +131,18 @@ public class Zaidimas
 		}
 		issaugotiApskritimus();
 	}
-	/*
-	public void setApskritimai(ArrayList <Apskritimas> apskritimu_array)
+	
+	public void nustatytiBusenas()
 	{
-		apskritimai = apskritimu_array;
+		System.out.println(apskritimai.size());
+		for (int i = 0; i < apskritimai.size(); i++)
+		{
+			boolean busena = apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1));
+			System.out.println(busena);
+			apskritimai.get(i).setBusena(busena);
+		}
 	}
-	*/
+
 	public ArrayList<Apskritimas> getApskritimai()
 	{
 		return apskritimai;
