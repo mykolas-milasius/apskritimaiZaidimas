@@ -36,6 +36,7 @@ public class Zaidimas
 				irasyti.write(""+apskritimai.get(i).getX()+",");// x
 				irasyti.write(""+apskritimai.get(i).getY()+","); // y
 				irasyti.write(""+apskritimai.get(i).getRadius()); //in.write(); // radius
+				// busena issaugoti
 				irasyti.write("\n"); 
 			}
 			irasyti.close();
