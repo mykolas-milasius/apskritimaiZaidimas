@@ -29,13 +29,14 @@ public class zaidimasController
 	{
 		model.addAttribute("name", name);
 		Zaidimas zaidimas = new Zaidimas();
+		zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
 		ArrayList<Apskritimas> apskritimai = zaidimas.getApskritimai();
 		if(sukurti.equals("sukurti"))
 		{
-			apskritimai.add(new Apskritimas(x, y, radius));
+			zaidimas.naujasApskritimas(x, y, radius); //apskritimai.add(new Apskritimas(x, y, radius));
 			zaidimas.pridetiZaidejoApskritimuKiekis();
 			zaidimas.nustatytiBusenas();
-			zaidimas.issaugotiZaidejoApskritima();
+			//zaidimas.issaugotiZaidejoApskritima();
 		}
 		else
 		{
@@ -43,12 +44,14 @@ public class zaidimasController
 			{
 				zaidimas.pasalintiApskritimus();
 			}
-			zaidimas.sukurtiApskritimus(15);
-			zaidimas.issaugotiApskritimus();
+			if(apskritimai.size() == 0) // zaidimas.arTuriApskritimu() metoda
+			{
+				zaidimas.pasalintiApskritimus();
+				zaidimas.sukurtiApskritimus(15);
+				zaidimas.issaugotiApskritimus();
+			}
 		}
-		zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
-		apskritimai = zaidimas.getApskritimai();
-		model.addAttribute("apskritimai", apskritimai);
+		model.addAttribute("apskritimai", zaidimas.getApskritimai());
 		return "greeting";
 	}
 }

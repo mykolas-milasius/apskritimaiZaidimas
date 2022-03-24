@@ -99,18 +99,27 @@ public class Zaidimas
 		Scanner scanner;
 		try
 		{
-			scanner = new Scanner(file);
-			while (scanner.hasNextLine())
+			if(file.exists())
 			{
-				String informacija = scanner.nextLine();
-				String padalinta[] = informacija.split(",");
-				double x = Double.parseDouble(padalinta[0]);
-				double y = Double.parseDouble(padalinta[1]);
-				double radius = Double.parseDouble(padalinta[2]);
-				boolean busena = Boolean.parseBoolean(padalinta[3]);
-				apskritimai.add(new Apskritimas(x, y, radius, busena));
+				scanner = new Scanner(file);
+				while (scanner.hasNextLine())
+				{
+					String informacija = scanner.nextLine();
+					String padalinta[] = informacija.split(",");
+					double x = Double.parseDouble(padalinta[0]);
+					double y = Double.parseDouble(padalinta[1]);
+					double radius = Double.parseDouble(padalinta[2]);
+					boolean busena = Boolean.parseBoolean(padalinta[3]);
+					apskritimai.add(new Apskritimas(x, y, radius, busena));
+				}
+				scanner.close();
 			}
-			scanner.close();
+			else
+			{
+				sukurtiFaila();
+				sukurtiApskritimus(15);
+				issaugotiApskritimus();
+			}
 		}
 		catch (FileNotFoundException e)
 		{
@@ -137,10 +146,17 @@ public class Zaidimas
 		System.out.println(apskritimai.size());
 		for (int i = 0; i < apskritimai.size(); i++)
 		{
-			boolean busena = apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1));
-			System.out.println(busena);
-			apskritimai.get(i).setBusena(busena);
+			if(i == apskritimai.size()-1) { break; }
+			else
+			{
+				boolean busena = apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1));
+				System.out.println(busena);
+				apskritimai.get(i).setBusena(busena);
+			}
 		}
+		pasalintiApskritimus();
+		sukurtiFaila();
+		issaugotiApskritimus();
 	}
 
 	public ArrayList<Apskritimas> getApskritimai()
@@ -156,5 +172,10 @@ public class Zaidimas
 	public void pridetiZaidejoApskritimuKiekis()
 	{
 		zaidejo_apskritimu_kiekis++;
+	}
+	
+	public void naujasApskritimas(double x, double y, double radius)
+	{
+		apskritimai.add(new Apskritimas(x, y, radius));
 	}
 }
