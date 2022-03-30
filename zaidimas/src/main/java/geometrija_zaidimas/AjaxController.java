@@ -15,8 +15,9 @@ public class AjaxController
 	{
 		Zaidimas zaidimas = new Zaidimas();
 		zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
+		zaidimas.suskaiciuotiPlotus();
 		ArrayList<Apskritimas> apskritimai = zaidimas.getApskritimai();
-		
+		zaidimas.taskai();
 		return apskritimai;
 	}
 }

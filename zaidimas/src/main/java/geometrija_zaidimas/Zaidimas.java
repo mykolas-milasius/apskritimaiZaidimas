@@ -13,6 +13,10 @@ public class Zaidimas
 	protected ArrayList<Apskritimas> apskritimai = new ArrayList<Apskritimas>();
 	private boolean apskritimai_issaugoti = false;
 	protected int zaidejo_apskritimu_kiekis = 0;
+	static final double x_max = 400;
+	static final double y_max = 400;
+	static final double plotas_max = x_max * y_max;
+	protected double taskai = 0;
 	
 	public Zaidimas(ArrayList<Apskritimas> apskritimai)
 	{
@@ -136,7 +140,7 @@ public class Zaidimas
 	{
 		for (int i=0; i < kiekis; i++)
 		{
-			apskritimai.add(new Apskritimas(-100, 100, -100, 100, 100));
+			apskritimai.add(new Apskritimas(-90, 90, -90, 90, 90));
 		}
 		issaugotiApskritimus();
 	}
@@ -150,7 +154,7 @@ public class Zaidimas
 			else
 			{
 				boolean busena = apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1));
-				System.out.println(busena);
+				//System.out.println(busena);
 				apskritimai.get(i).setBusena(busena);
 			}
 		}
@@ -176,6 +180,34 @@ public class Zaidimas
 	
 	public void naujasApskritimas(double x, double y, double radius)
 	{
-		apskritimai.add(new Apskritimas(x, y, radius));
+		if (x_max >= x && y_max >= y) // priverčia, kad centras būtų ribose
+		{
+			apskritimai.add(new Apskritimas(x, y, radius));
+		}
+	}
+	
+	public void suskaiciuotiPlotus()
+	{
+		for (int i = 0; i < apskritimai.size(); i++)
+		{
+			apskritimai.get(i).setPlotas();
+			System.out.println(apskritimai.get(i).getPlotas());
+		}
+	}
+	
+	public void taskai()
+	{
+		for (int i = 15; i < apskritimai.size(); i++)
+		{
+			for (int j = 1; j < 100; j++)
+			{
+				if(apskritimai.get(i).getPlotas() > (plotas_max/(j)))
+				{
+					taskai += apskritimai.get(i).getPlotas() * 1/j;
+				}
+			}
+		}
+		System.out.println(plotas_max);
+		System.out.println("Taskai " + taskai);
 	}
 }

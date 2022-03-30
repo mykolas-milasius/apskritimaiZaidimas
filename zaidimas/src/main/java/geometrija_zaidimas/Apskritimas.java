@@ -6,6 +6,7 @@ public class Apskritimas extends Figura
 	protected double y;
 	protected double radius;
 	protected boolean busena = false;
+	protected double plotas;
 	
 	public Apskritimas(double x, double y, double radius, boolean busena)
 	{
@@ -16,6 +17,10 @@ public class Apskritimas extends Figura
 		this.busena = busena;
 	}
 	
+	public double getPlotas() {
+		return plotas;
+	}
+
 	public Apskritimas(double x, double y, double radius)
 	{
 		super();
@@ -26,11 +31,15 @@ public class Apskritimas extends Figura
 
 	public Apskritimas(double x_from, double x_till, double y_from, double y_till, double radius_max)
 	{
-		this.x = (x_till-x_from) * Math.random();
-		this.y = (y_till-y_from) *  Math.random();
+		this.x = x_till - (x_till-x_from) * Math.random();
+		this.y = y_till - (y_till-y_from) *  Math.random();
 		this.radius = Math.random() * radius_max;
 	}
-
+	
+	public void setPlotas()
+	{
+		plotas = 3.14 * radius * radius;
+	}
 	public double getX()
 	{
 		return x;
@@ -68,7 +77,7 @@ public class Apskritimas extends Figura
 		return Math.sqrt ( atstumas_x * atstumas_x + atstumas_y * atstumas_y );
 	}
 	
-	public boolean arPersidengia ( Apskritimas kitas )
+	public boolean arPersidengia ( Apskritimas kitas ) // pasiziureti
 	{
 		double atstumas = atstumasNuoCentroKitoCentro( kitas );
 		return atstumas < ( radius + kitas.radius );

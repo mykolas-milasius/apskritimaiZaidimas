@@ -19,7 +19,12 @@
     	}
     	canvas
     	{
+    		margin: 5px, auto, 5px, auto;
     		border: 1px solid black;
+    	}
+    	.tr-blue
+    	{
+    		background-color: aliceblue;
     	}
     </style>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
@@ -86,13 +91,14 @@
 								, 2 * Math.PI
 							);
 							ctx.stroke();
+							ctx.moveTo(-200, 400);
 						}
         			}
         			
         			function rodyti_lentele(id_lenteles, apskritimai)
         			{
         				rez = '<table>';
-        		    	rez += '<tr>' +
+        		    	rez += '<tr class="tr-blue">' +
         	    		'<td>number</td>' +
         	    		'<td>x</td>' +
         	    		'<td>y</td>' +

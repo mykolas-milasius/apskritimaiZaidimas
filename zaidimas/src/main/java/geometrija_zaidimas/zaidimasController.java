@@ -30,6 +30,7 @@ public class zaidimasController
 		model.addAttribute("name", name);
 		Zaidimas zaidimas = new Zaidimas();
 		zaidimas.nuskaitymasApskritimu("data/duomenys.csv");
+		zaidimas.suskaiciuotiPlotus();
 		ArrayList<Apskritimas> apskritimai = zaidimas.getApskritimai();
 		if(sukurti.equals("sukurti"))
 		{
@@ -51,6 +52,7 @@ public class zaidimasController
 				zaidimas.issaugotiApskritimus();
 			}
 		}
+		zaidimas.taskai();
 		model.addAttribute("apskritimai", zaidimas.getApskritimai());
 		return "greeting";
 	}
