@@ -4,6 +4,18 @@
     <title>Getting Started: Serving Web Content</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <style>
+    	html
+    	{
+    		height: 100%;
+		}
+    	body
+    	{
+	    	height: 100%;
+			margin: 0;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+	  		background-image: linear-gradient(cyan, lightblue, blue);
+		}		
     	table, tr, td
     	{
     		border: 1px solid black;
@@ -22,9 +34,19 @@
     		margin: 5px, auto, 5px, auto;
     		border: 1px solid black;
     	}
-    	.tr-blue
+    	button, input
     	{
-    		background-color: aliceblue;
+    		display: inline;
+    		margin: 5px, auto, 5px, auto;
+    		border: 1px solid black;
+    	}
+    	.tr-antraste
+    	{
+    		background-color: cyan;
+    	}
+    	.tr-prideti
+    	{
+    		background-color: lightblue;
     	}
     </style>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
@@ -91,14 +113,14 @@
 								, 2 * Math.PI
 							);
 							ctx.stroke();
-							ctx.moveTo(-200, 400);
+							//ctx.moveTo(-200, 400);
 						}
         			}
         			
         			function rodyti_lentele(id_lenteles, apskritimai)
         			{
         				rez = '<table>';
-        		    	rez += '<tr class="tr-blue">' +
+        		    	rez += '<tr class="tr-antraste">' +
         	    		'<td>number</td>' +
         	    		'<td>x</td>' +
         	    		'<td>y</td>' +
@@ -108,7 +130,7 @@
         				
         	    		for (var i = 0; i < apskritimai.length; i++)
         	    		{
-        	    			rez += '<tr>'+
+        	    			rez += '<tr class="tr-prideti">'+
         	    			'<td>' + (i+1) + '</td>' +
         	    			'<td>' + apskritimai[i].x + '</td>' +
         	    			'<td>' + apskritimai[i].y + '</td>' +
@@ -146,11 +168,11 @@
 	        <input type="hidden" name="sukurti_name" value="sukurti">
 		 </form>
 	</div>
-	<button id="button_sukurti">Sukurti</button>
-	<input type="button" id="rodyk" value="Rodyti">
+	<button id="button_sukurti" style="height:50px; width:100px">Sukurti</button>
+	<input type="button" id="rodyk" value="Rodyti" style="height:50px; width:100px">
 	<form method="post" action="" id="isvalymo_forma">
 		<input type="hidden" name="isvalyti_name" value="isvalyti">
-		<input type="submit" id="isvalyti" value="Išvalyti">
+		<input type="submit" id="isvalyti" value="Išvalyti" style="height:50px; width:100px">
 	</form>
 	<canvas id="vaizdas" width="400" height="400"></canvas>
     <!-- <table>

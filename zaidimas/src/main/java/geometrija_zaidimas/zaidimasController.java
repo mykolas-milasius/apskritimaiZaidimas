@@ -34,10 +34,9 @@ public class zaidimasController
 		ArrayList<Apskritimas> apskritimai = zaidimas.getApskritimai();
 		if(sukurti.equals("sukurti"))
 		{
-			zaidimas.naujasApskritimas(x, y, radius); //apskritimai.add(new Apskritimas(x, y, radius));
-			zaidimas.pridetiZaidejoApskritimuKiekis();
+			zaidimas.naujasApskritimas(x, y, radius);
 			zaidimas.nustatytiBusenas();
-			//zaidimas.issaugotiZaidejoApskritima();
+			zaidimas.pridetiZaidejoApskritimuKiekis();
 		}
 		else
 		{
@@ -45,7 +44,7 @@ public class zaidimasController
 			{
 				zaidimas.pasalintiApskritimus();
 			}
-			if(apskritimai.size() == 0) // zaidimas.arTuriApskritimu() metoda
+			if(apskritimai.size() == 0)
 			{
 				zaidimas.pasalintiApskritimus();
 				zaidimas.sukurtiApskritimus(15);

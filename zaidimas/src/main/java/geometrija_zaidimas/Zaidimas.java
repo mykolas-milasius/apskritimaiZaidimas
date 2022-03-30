@@ -147,14 +147,12 @@ public class Zaidimas
 	
 	public void nustatytiBusenas()
 	{
-		System.out.println(apskritimai.size());
 		for (int i = 0; i < apskritimai.size(); i++)
 		{
 			if(i == apskritimai.size()-1) { break; }
 			else
 			{
 				boolean busena = apskritimai.get(i).arPersidengia(apskritimai.get(apskritimai.size()-1));
-				//System.out.println(busena);
 				apskritimai.get(i).setBusena(busena);
 			}
 		}
@@ -180,7 +178,7 @@ public class Zaidimas
 	
 	public void naujasApskritimas(double x, double y, double radius)
 	{
-		if (x_max >= x && y_max >= y) // priverčia, kad centras būtų ribose
+		if (x_max >= x && y_max >= y)
 		{
 			apskritimai.add(new Apskritimas(x, y, radius));
 		}
@@ -191,7 +189,7 @@ public class Zaidimas
 		for (int i = 0; i < apskritimai.size(); i++)
 		{
 			apskritimai.get(i).setPlotas();
-			System.out.println(apskritimai.get(i).getPlotas());
+			//System.out.println(apskritimai.get(i).getPlotas());
 		}
 	}
 	
@@ -207,7 +205,7 @@ public class Zaidimas
 				}
 			}
 		}
-		System.out.println(plotas_max);
-		System.out.println("Taskai " + taskai);
+		//System.out.println(plotas_max);
+		//System.out.println("Taskai " + taskai);
 	}
 }

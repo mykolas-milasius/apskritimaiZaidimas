@@ -74,13 +74,15 @@ public class Apskritimas extends Figura
 	{
 		double atstumas_x = x - kitas.x;
 		double atstumas_y = y - kitas.y;
+		//System.out.println("Tikrinamas apskritimas: " + x + " " + y + " " + radius);
 		return Math.sqrt ( atstumas_x * atstumas_x + atstumas_y * atstumas_y );
 	}
 	
 	public boolean arPersidengia ( Apskritimas kitas ) // pasiziureti
 	{
 		double atstumas = atstumasNuoCentroKitoCentro( kitas );
-		return atstumas < ( radius + kitas.radius );
+		//System.out.println("Suskaičiuotas atstumas: " + atstumas);
+		return atstumas < (( radius + kitas.radius )/2);
 	}
 
 	public boolean getBusena()
