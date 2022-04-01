@@ -17,6 +17,7 @@ public class Zaidimas
 	static final double y_max = 400;
 	static final double plotas_max = x_max * y_max;
 	protected double taskai = 0;
+	protected boolean zaidziam = true;
 	
 	public Zaidimas(ArrayList<Apskritimas> apskritimai)
 	{
@@ -189,7 +190,6 @@ public class Zaidimas
 		for (int i = 0; i < apskritimai.size(); i++)
 		{
 			apskritimai.get(i).setPlotas();
-			//System.out.println(apskritimai.get(i).getPlotas());
 		}
 	}
 	
@@ -199,13 +199,20 @@ public class Zaidimas
 		{
 			for (int j = 1; j < 100; j++)
 			{
+				if(apskritimai.get(i).getBusena())
+				{
+					zaidziam = false;
+				}
 				if(apskritimai.get(i).getPlotas() > (plotas_max/(j)))
 				{
 					taskai += apskritimai.get(i).getPlotas() * 1/j;
 				}
 			}
 		}
-		//System.out.println(plotas_max);
-		//System.out.println("Taskai " + taskai);
+	}
+	
+	public boolean arTestiZaidima()
+	{
+		return zaidziam;
 	}
 }
