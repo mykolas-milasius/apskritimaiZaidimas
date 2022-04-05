@@ -82,73 +82,80 @@
     		        //dialog_sukurti.dialog("close");
     		        $("#sukurimo_forma").submit();
     		    }
-    		    // AJAX
+    		    
+    		    function piesti (apskritimai, vaizdas)
+    			{
+		    		console.log ( apskritimai );
+		    		var canvas = document.getElementById("vaizdas");
+					var ctx = canvas.getContext("2d");
+					
+					ctx.beginPath();
+					ctx.moveTo(200, 0);
+					ctx.lineTo(200, 400);
+					ctx.moveTo(0, 200);
+					ctx.lineTo(400, 200);							
+					ctx.stroke();
+					
+					for ( i = 0; i < apskritimai.length; i++ )
+					{
+						ctx.beginPath();
+						ctx.arc( 
+							200 + 2 * parseInt ( apskritimai [ i ].x )
+							, 200 - 2 * parseInt ( apskritimai[ i ].y )
+							, parseInt ( apskritimai[ i ].radius )
+							, 0
+							, 2 * Math.PI
+						);
+						ctx.stroke();
+						//ctx.moveTo(-200, 400);
+					}
+    			}
+    		    
+    			function rodyti_lentele(id_lenteles, apskritimai, taskai)
+    			{
+    				rez = '<table>';
+    		    	rez += '<tr class="tr-antraste">' +
+    	    		'<td>number</td>' +
+    	    		'<td>x</td>' +
+    	    		'<td>y</td>' +
+    	    		'<td>radius</td>' +
+    	    		'<td>arPersidengia</td>' +
+    	    		'</tr>';
+    				
+    	    		for (var i = 0; i < apskritimai.length; i++)
+    	    		{
+    	    			rez += '<tr class="tr-prideti">'+
+    	    			'<td>' + (i+1) + '</td>' +
+    	    			'<td>' + apskritimai[i].x + '</td>' +
+    	    			'<td>' + apskritimai[i].y + '</td>' +
+    	    			'<td>' + apskritimai[i].radius + '</td>' +
+    	    			'<td>' + apskritimai[i].busena + '</td></tr>';
+    	    		}
+    				rez += '</table>';
+    				rez += 'Taškų kiekis: ' + taskai;
+    				rez_vieta = document.getElementById (id_lenteles);
+    				rez_vieta.innerHTML = rez;
+    			}
+    		    
         		$( '#rodyk' ).click ( function() 
         		{
-        			function piesti (apskritimai, vaizdas)
-        			{
-			    		console.log ( apskritimai );
-			    		var canvas = document.getElementById("vaizdas");
-						var ctx = canvas.getContext("2d");
-						
-						ctx.beginPath();
-						ctx.moveTo(200, 0);
-						ctx.lineTo(200, 400);
-						ctx.moveTo(0, 200);
-						ctx.lineTo(400, 200);							
-						ctx.stroke();
-						
-						for ( i = 0; i < apskritimai.length; i++ )
-						{
-							ctx.beginPath();
-							ctx.arc( 
-								200 + 2 * parseInt ( apskritimai [ i ].x )
-								, 200 - 2 * parseInt ( apskritimai[ i ].y )
-								, parseInt ( apskritimai[ i ].radius )
-								, 0
-								, 2 * Math.PI
-							);
-							ctx.stroke();
-							//ctx.moveTo(-200, 400);
-						}
-        			}
-        			
-        			function rodyti_lentele(id_lenteles, apskritimai)
-        			{
-        				rez = '<table>';
-        		    	rez += '<tr class="tr-antraste">' +
-        	    		'<td>number</td>' +
-        	    		'<td>x</td>' +
-        	    		'<td>y</td>' +
-        	    		'<td>radius</td>' +
-        	    		'<td>arPersidengia</td>' +
-        	    		'</tr>';
-        				
-        	    		for (var i = 0; i < apskritimai.length; i++)
-        	    		{
-        	    			rez += '<tr class="tr-prideti">'+
-        	    			'<td>' + (i+1) + '</td>' +
-        	    			'<td>' + apskritimai[i].x + '</td>' +
-        	    			'<td>' + apskritimai[i].y + '</td>' +
-        	    			'<td>' + apskritimai[i].radius + '</td>' +
-        	    			'<td>' + apskritimai[i].busena + '</td></tr>';
-        	    		}
-        				rez += '</table>';
-        				rez_vieta = document.getElementById (id_lenteles);
-        				rez_vieta.innerHTML = rez;
-        			}
-        			
     				$.ajax(
     					{
-    						url: '/apskritimai',}).done(function(apskritimai)
+    						url: '/zaidimas',}).done(function(zaidimas)
     						{
-    							piesti(apskritimai, vaizdas);
-    							rodyti_lentele('rez', apskritimai);
+    							if(zaidimas.zaidziam)
+    							{
+        							piesti(zaidimas.apskritimai, vaizdas);
+        							rodyti_lentele('rez', zaidimas.apskritimai, zaidimas.taskai);
+    							}
+    							else
+    							{
+    								location.href="finish";
+    							}
     						});
     				 	}
     				);
         		});
-            //});
     </script>
 </head>
 <body>

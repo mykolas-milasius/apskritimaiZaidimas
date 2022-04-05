@@ -199,10 +199,6 @@ public class Zaidimas
 		{
 			for (int j = 1; j < 100; j++)
 			{
-				if(apskritimai.get(i).getBusena())
-				{
-					zaidziam = false;
-				}
 				if(apskritimai.get(i).getPlotas() > (plotas_max/(j)))
 				{
 					taskai += apskritimai.get(i).getPlotas() * 1/j;
@@ -211,7 +207,23 @@ public class Zaidimas
 		}
 	}
 	
-	public boolean arTestiZaidima()
+	public void tikrintiArToliauZaisti()
+	{
+		for (int i = 0; i < apskritimai.size(); i++)
+		{
+			if(apskritimai.get(i).getBusena())
+			{
+				zaidziam = false;
+			}
+		}
+	}
+	
+	public double getTaskai()
+	{
+		return taskai;
+	}
+	
+	public boolean getZaidziam()
 	{
 		return zaidziam;
 	}

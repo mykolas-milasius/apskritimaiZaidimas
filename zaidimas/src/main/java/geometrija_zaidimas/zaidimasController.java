@@ -52,7 +52,19 @@ public class zaidimasController
 			}
 		}
 		zaidimas.taskai();
+		zaidimas.tikrintiArToliauZaisti();
+		if(!zaidimas.getZaidziam())
+		{
+			return "redirect:finish";
+		}
 		model.addAttribute("apskritimai", zaidimas.getApskritimai());
-		return "greeting";
+		return "greeting"; // 
+	}
+	
+	@RequestMapping("/finish")
+	public String pabaiga(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model)
+	{
+		model.addAttribute("name", name);
+		return "pabaiga";
 	}
 }
